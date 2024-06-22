@@ -1,40 +1,30 @@
 <template>
-  <section class="csf">
-    <router-view />
-  </section>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav>
+  <router-view/>
 </template>
 
-<script>
-import { onBeforeMount, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import userOperations from "@/Services/UserService";
-export default {
-  setup() {
-    const Router = useRouter();
-    let user = JSON.parse(localStorage.getItem("CSF"));
-    let chatData = JSON.parse(localStorage.getItem("chat-user"))
-    const Store = useStore();
-    const { userRole } = userOperations();
-    const UserCheck = onBeforeMount(() => {
-      if (user) {
-        Store.dispatch("loginUser", user);
-        let token = user.jwtToken;
-        Store.dispatch("SaveUserName", user.cusUserTxt);
-        // Store.dispatch("setChatId" , chatData._id)
-        // Store.dispatch("setChatData" , chatData)
-        userRole(token).then((data) => {
-          let apiData = data.data;
-          Store.dispatch("roleAssign", apiData[0].croRoleTxt);
-        });
-      } else if (!user) {
-        // Router.push("/");
-      }
-    });
-    return {
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-      UserCheck,
-    };
-  },
-};
-</script>
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>

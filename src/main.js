@@ -1,29 +1,17 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import router from "./router";
-import store from "./store";
-import eventBus from "vue3-eventbus";
-import { EmojiPickerPlugin } from "vue-emoji-picker";
-import { Quasar } from "quasar";
-import quasarUserOptions from "./quasar-user-options";
+import { createApp } from 'vue'
+import App from './App.vue'
+import './registerServiceWorker'
+import router from './router'
+import store from './store'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
-//css
-import "vue3-emoji-picker/css";
-// import "@/assets/app.css";
 
-import controls from "./controls/controls.js";
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
-const app = createApp(App);
-controls(app);
-
-app
-  .use(Quasar, quasarUserOptions)
-  .use()
-  .use(eventBus, {
-    globalPropertyName: "$ev",
-  })
-  .use(EmojiPickerPlugin)
-  .use(store)
-  .use(router)
-  .mount("#app");
+createApp(App).use(store).use(router).use(vuetify).mount('#app')
