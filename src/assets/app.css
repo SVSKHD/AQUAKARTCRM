@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+:root {
+  --q-dark: #2c3e50;
+  --q-negative: #f44336;
+  --app-bg: #f9fafb;
+  --highlighter: #83d8ae;
+  --box-shadow: 1px 1px 7px rgb(154 154 204 / 10%);
+  --q-primary: #2c3e50;
+  --q-primary-click: #1e2b37;
+  --fc-border-color: #ecedee;
+  --fc-today-bg-color: #ebfff6;
+  --q-info: #1e2b37;
+  --q-warning: #a9113e;
+  --q-accent: #dfdfdf;
+}
+body {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--app-bg);
+}
+.q-body--force-scrollbar-y {
+  /* overflow-y: scroll; */
+}
+.app-bg {
+  background-color: var(--app-bg) !important;
+}
+.display-none {
+  display: none !important;
+}
+.breaker {
+  margin-bottom: 55px !important;
+}
+/*font-size*/
+.f-14 {
+  font-size: 14px !important;
+}
+.pointer {
+  cursor: pointer !important;
+}
+.bg-grey {
+  background: #333 !important;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+}
+/*Quasar Override*/
+.q-btn:focus {
+  box-shadow: 0 0 0 0.2rem rgb(76 91 106 / 50%);
+}
+.q-card {
+  box-shadow: var(--box-shadow);
+}
+.q-card__section--vert {
+  padding: 0.5rem;
+}
+.dark-drawer {
+  border-radius: 0 15px 15px 0 ;
+  background-color: var(--q-dark);
+  color: #fff;
+}
+.version {
+  font-size: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+}
+.menu:hover {
+  color: #fff;
+}
+.sub-menu {
+  padding-left: 3rem;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.sub-menu:hover {
+  opacity: 0.9;
+}
+header .q-layout__shadow:after {
+  box-shadow: none;
+}
+.q-layout__section--marginal {
+  color: var(--q-dark);
+}
+.q-item.q-router-link--active,
+.q-item--active {
+  color: var(--highlighter);
+}
+.card-menu {
+  min-width: 8rem;
+  font-size: 14px;
+}
+
+.card-menu > .q-item {
+  min-height: 30px !important;
+}
+header.q-header.q-layout__section--marginal.fixed-top.bg-white {
+  padding: 0.5rem;
+  background-color: var(--app-bg) !important;
+}
+main.q-page.q-layout-padding.bg-white {
+  background-color: var(--app-bg) !important;
+}
+/* .q-field__control:before,
+.q-field__control:after {
+  content: none;
+}
+
+.q-field--filled .q-field__control {
+  background: #e6e6e6;
+  border-radius: 4px !important;
+} */
+.settings {
+  height: calc(100vh - 9rem);
+}
+.my-card .text-h6 {
+  border-left: 3px solid var(--highlighter);
+  padding-left: 0.8rem;
+}
+.my-card .text-subtitle2 {
+  padding-left: 1rem;
+}
+
+.q-dialog__inner > div {
+  box-shadow: var(--box-shadow);
+}
+.dialog .close {
+  margin-top: 0rem;
+  margin-right: 0px;
+}
+
+.dialog .w100 {
+  width: 100vw;
+}
+
+.dialog.right > .q-dialog__inner--minimized,
+.dialog.right > .q-dialog__inner--minimized > .q-card {
+  height: 100vh;
+  padding: 0px !important;
+  border-radius: 0px !important;
+}
+
+.dialog.right > .q-dialog__inner--minimized > div {
+  max-height: 100vh !important;
+}
+
+.dialog.right > .q-dialog__inner--minimized > .q-card > div {
+  border-radius: 0px !important;
+}
+.dialog_right {
+  overflow-y: auto;
+}
+.csf_fields {
+  margin-bottom: 5px;
+}
+.csf_button {
+  background-color: #2c3e50;
+  color: white;
+  text-transform: capitalize !important;
+  border-radius: 4px;
+  margin: 5px;
+}
+.csf_table {
+  height: 284px;
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.scroll {
+  overflow: hidden !important;
+}
+.csf_button.bg-primary:hover {
+  background-color: var(--q-primary-click) !important;
+}
+.csf_button > .q-focus-helper {
+  opacity: 0 !important;
+}
+
+.csf_input .q-field--outlined .q-field__control {
+  border-radius: 0.375rem;
+}
+.csf_input label.q-field {
+  margin-top: 5px;
+}
+.csf_filter_select {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+.csf_signin {
+  max-width: 25rem;
+  margin: auto;
+  padding-top: 10rem;
+}
+
+.csf_task_card {
+  border-left: 3px solid var(--highlighter);
+  padding-left: 0.8rem;
+}
+
+.csf_task_card_avatar {
+  background-color: #83d8ae;
+}
+
+/*Full Calender CSS*/
+.fc-theme-standard td,
+.fc-theme-standard th {
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+}
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+  height: calc(100vh - 10rem);
+  width: 100%;
+  max-width: calc(200vh - 10rem);
+  position: relative;
+  margin: auto auto;
+}
+
+.fc .fc-button-primary:disabled {
+  text-transform: capitalize !important;
+}
+.fc-button-group > .fc-button-primary {
+  color: var(--q-dark) !important;
+  border-color: var(--q-dark) !important;
+  background-color: #fff !important;
+  text-transform: capitalize !important;
+}
+.fc-toolbar-title {
+  font-size: 1.5em;
+}
+.fc-daygrid-dot-event .fc-event-title,
+.fc-direction-ltr .fc-daygrid-event .fc-event-time {
+  font-weight: 500 !important;
+}
+.fc-daygrid-dot-event,
+.fc-daygrid-dot-event.fc-event-mirror {
+  background: #dddddd78;
+}
+
+/*loginpage*/
+.login-layout {
+  background-color: #2c3e50;
+}
+.cs-logo {
+  height: 100px;
+  width: 100px;
+}
+
+/*dashboard title*/
+.dashboard-title2 {
+  font-size: 17px;
+}
+.dashboard-title3 {
+  font-size: 13px;
+}
+
+.fc-right .fc-prev-button,
+.fc-right .fc-next-button {
+  background-color: #b1d583 !important;
+  background-image: none;
+}
+
+.csf_loader_margin {
+  margin-bottom: 5rem;
+}
+
+.mandatory:after {
+  content: " *";
+  color: red;
+}
+
+.fc-nextMonth-button {
+  font-size: 14px;
+}
+
+.csf-background {
+  background-color: #1e2b37;
+}
+.grid-view-select {
+  margin-bottom: 15px;
+}
+
+.task-label {
+  font-size: 20px;
+}
+
+/* task manager */
+.task-manager-column {
+  width: 400px;
+  margin: 10px;
+}
+
+.task-manager-dock-card {
+  font-size: 17px;
+  font-family: "Poppins";
+  font-weight: bolder;
+  width: 250px;
+  height: 650px !important;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overflow-y: visible;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+
+.task-manager-card-title {
+  font-size: 14px;
+  font-family: "Poppins";
+}
+
+.height-adjuster {
+  height: 100vh;
+}
+
+.task-manager-card-description {
+  font-size: 12px;
+  font-weight: lighter;
+  font-family: "Poppins";
+}
+
+.task-manager-title-text {
+  font-size: 17px;
+  font-family: "Poppins";
+  color: red;
+}
+
+.task-manager-create-button {
+  background-color: var(--q-primary) !important;
+}
+
+.task-manager-card {
+  margin-bottom: 10px;
+}
+
+.task-manager-title-card {
+  margin-bottom: 10px;
+}
+
+.task-manager-bg-color {
+  background-color: #dfdfdf;
+  padding: 4px;
+  width: 300px;
+  border-radius: 10px;
+}
+
+.csf-toolbar-select {
+  width: 250px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.manage-header th {
+  font-weight: bold;
+}
+
+.members-header th {
+  font-weight: bold;
+}
+
+.messenger-toolbar {
+  overflow: inherit;
+}
+.manage-group,
+.members-guests {
+  max-width: 1500px !important;
+  width: 1000px !important;
+}
+
+.create-group,
+.update-dialog,
+.creategroup-external,
+.addpeople-dialog,
+.editgroup-dialog {
+  max-width: 1500px !important;
+  width: 600px !important;
+}
+.addmember-btn {
+  width: 250px !important;
+}
+.search-multiselect {
+  max-width: 500px !important;
+}
+
+.messenger-header {
+  width: 773px;
+  margin-left: 388px;
+}
+.whole-footer {
+  margin-top: 50%;
+}
+
+/* chat-system */
+.rounded {
+  border-radius: 0.2rem;
+}
+
+.chat-height {
+  height: 80vh;
+}
+
+.chat-area-height {
+  height: 70vh;
+}
+
+.vue3-emojipicker .grayscale {
+  --tw-grayscale: none !important;
+}
+.emoji-align {
+}
+
+.chat-custom-list{
+  border-radius: 0.2rem!important;
+}

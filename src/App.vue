@@ -1,85 +1,40 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <section class="csf">
+    <router-view />
+  </section>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script>
+import { onBeforeMount, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import userOperations from "@/Services/UserService";
+export default {
+  setup() {
+    const Router = useRouter();
+    let user = JSON.parse(localStorage.getItem("CSF"));
+    let chatData = JSON.parse(localStorage.getItem("chat-user"))
+    const Store = useStore();
+    const { userRole } = userOperations();
+    const UserCheck = onBeforeMount(() => {
+      if (user) {
+        Store.dispatch("loginUser", user);
+        let token = user.jwtToken;
+        Store.dispatch("SaveUserName", user.cusUserTxt);
+        // Store.dispatch("setChatId" , chatData._id)
+        // Store.dispatch("setChatData" , chatData)
+        userRole(token).then((data) => {
+          let apiData = data.data;
+          Store.dispatch("roleAssign", apiData[0].croRoleTxt);
+        });
+      } else if (!user) {
+        // Router.push("/");
+      }
+    });
+    return {
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+      UserCheck,
+    };
+  },
+};
+</script>

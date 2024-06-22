@@ -1,0 +1,35 @@
+import CCard from "./CCard.vue";
+import CDialog from "./CDialog.vue";
+import CBtn from "./CBtn.vue";
+import CDrawer from "./CDrawer.vue";
+import CInput from "./CInput.vue";
+import CSelect from "./CSelect.vue";
+import CChip from "./CChip.vue";
+import CToggle from "./CToggle.vue";
+import CDatetime from "./CDatetime.vue";
+import CColorpicker from "./CColorpicker.vue";
+import CFilterSelect from "./CFilterSelect";
+import CNotifications from "./CNotifications";
+import CDatePicker from "@/controls/CDatePicker";
+import CPopup from "@/controls/CPopup";
+import CButton from "@/controls/CButton";
+import CTaskCard from "@/controls/CTaskCard";
+
+export default (app) => {
+  app.component("CCard", CCard);
+  app.component("CDialog", CDialog);
+  app.component("CBtn", CBtn);
+  app.component("CDrawer", CDrawer);
+  app.component("CInput", CInput);
+  app.component("CSelect", CSelect);
+  app.component("CChip", CChip);
+  app.component("CToggle", CToggle);
+  app.component("CDatetime", CDatetime);
+  app.component("CColorpicker", CColorpicker);
+  app.component("CNotifications", CNotifications);
+  app.component("CFilterSelect", CFilterSelect);
+  app.component("CDatePicker", CDatePicker);
+  app.component("CPopup", CPopup);
+  app.component("CButton", CButton);
+  app.component("CTaskCard", CTaskCard);
+};
