@@ -1,17 +1,23 @@
 <template>
-  <v-card
-    color="grey-lighten-4"
-    rounded="0"
-    flat
-  >
-    <v-toolbar collapse>
-      <v-btn icon>
-        <v-icon icon="fas fa-home" />
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-toolbar>
-  </v-card>
+    <aqua-header/>
+    <div class="p-2">
+    <router-view />
+    </div>
+    <aqua-footer/>
 </template>
+
+<script>
+import AquaHeader from "./header";
+import AquaFooter from "./footer";
+
+export default {
+  components: {
+    AquaHeader,
+    AquaFooter,
+  },
+};
+</script>
+
+<style scoped>
+/* Add any styles specific to this component here */
+</style>
