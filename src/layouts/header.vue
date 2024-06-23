@@ -1,8 +1,4 @@
 <template>
-    <v-card
-      rounded="0"
-      flat
-    >
       <v-toolbar collapse>
         <v-btn icon>
           <v-icon icon="fas fa-home" />
@@ -12,5 +8,4 @@
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
-    </v-card>
   </template>
