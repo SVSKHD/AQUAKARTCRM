@@ -3,19 +3,21 @@
     <v-row>
       <!-- Left Column -->
       <v-col cols="12" md="6">
-        <div v-for="item in offlineMenu" :key="item.name">
-          <v-card
-            append-icon="mdi-open-in-new"
-            class="mx-auto my-3"
-            :href="item.path"
-            max-width="344"
-            :prepend-icon="item.icon"
-            rel="noopener"
-            subtitle="Check out the official repository"
-            target="_blank"
-            :title="item.name"
-          ></v-card>
-        </div>
+        <v-row>
+          <v-col cols="12" sm="6" v-for="item in offlineMenu" :key="item.name">
+            <v-card
+              append-icon="mdi-open-in-new"
+              class="mx-auto my-3"
+              :href="item.path"
+              max-width="250"
+              :prepend-icon="item.icon"
+              rel="noopener"
+              subtitle="Check out the official repository"
+              target="_blank"
+              :title="item.name"
+            ></v-card>
+          </v-col>
+        </v-row>
       </v-col>
       <!-- Right Column -->
       <v-col cols="12" md="6">
@@ -35,8 +37,8 @@ export default {
   name: 'HomeView',
   setup() {
     const offlineMenu = ref([
-      { name: "Invoices", path: "/invoices" , icon:"mdi-file-document-outline"},
-      { name: "Send Message", path: "/send-message", icon:"mdi-send" }
+      { name: "Invoices", path: "/invoices", icon: "mdi-file-document-outline" },
+      { name: "Send Message", path: "/send-message", icon: "mdi-send" }
     ]);
     return {
       offlineMenu

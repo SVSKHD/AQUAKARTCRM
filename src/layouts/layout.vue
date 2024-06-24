@@ -7,20 +7,6 @@
         permanent
         @click="rail = false"
       >
-        <!-- <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-          title="John Leider"
-          nav
-        >
-          <template v-slot:append>
-            <v-btn
-              icon="mdi-chevron-left"
-              variant="text"
-              @click.stop="rail = !rail"
-            ></v-btn>
-          </template>
-        </v-list-item> -->
-
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
@@ -31,29 +17,68 @@
       </v-navigation-drawer>
       <v-main>
         <v-container>
+          <v-dialog v-model="dialog" max-width="400" persistent>
+            <v-card
+              prepend-icon="mdi-account"
+              text="Login to access the power of admin"
+              title="Login"
+            >
+            <v-card-text>
+              <v-text-field
+                label="Email"
+                required
+                v-model="userDataCreds.email"
+                variant="outlined"
+                density="compact"
+              />
+              <v-text-field
+                label="password"
+                required
+                v-model="userDataCreds.password"
+                type="password"
+                variant="outlined"
+                density="compact"
+              />
+            </v-card-text>
+            <v-btn @click="handleSubmit">Login</v-btn>
+            </v-card>
+          </v-dialog>
           <h1>{{ pageTitle }}</h1>
-          <hr/>
-          <router-view/>
+          <hr />
+          <router-view />
         </v-container>
       </v-main>
-      <v-footer
-        name="footer"
-        app
-      >
-        
-      </v-footer>
+      <v-footer name="footer" app></v-footer>
     </v-layout>
   </v-app>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch , onBeforeMount} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import userServiceOperations from '@/services/user';
 
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const store = useStore();
+
+    const userDataCreds = ref({
+      email:"",
+      password:""
+    })
+    const handleSubmit = () =>{
+     console.log("user", userDataCreds.value)
+     userServiceOperations.UserLogin(userDataCreds.value).then((res)=>{
+      console.log("res", res.data)
+      store.commit("setUserData",res.data)
+      store.commit("setUserStatus",true)
+      dialog.value=false
+      localStorage.setItem("user",JSON.stringify(res.data))
+     })
+    }
 
     const offlineMenu = ref([
       { name: "Offline-Menu", path: "/invoices" },
@@ -61,6 +86,7 @@ export default {
     ]);
     const drawer = ref(true);
     const rail = ref(true);
+    const dialog = ref(false);
 
     const pageTitle = computed(() => {
       if (route.path === '/') {
@@ -68,7 +94,7 @@ export default {
       }
       switch (route.name) {
         case 'about':
-          return 'About'
+          return 'About';
         case 'home':
           return 'Home';
         case 'account':
@@ -89,11 +115,32 @@ export default {
       next();
     });
 
+    const userStatus = computed(() => store.state.userStatus);
+
+    // Watch for changes in userStatus
+    watch(userStatus, (newStatus) => {
+      if (!newStatus) {
+        dialog.value = true;
+      }
+    }, { immediate: true });
+
+  onBeforeMount(()=>{
+      const user = localStorage.getItem("user")
+      if(user){
+        store.commit("setUserData",user)
+      }
+    })
+
     return {
       offlineMenu,
       drawer,
+      dialog,
       rail,
-      pageTitle
+      pageTitle,
+      userStatus,
+      userDataCreds,
+      //functions
+      handleSubmit
     };
   }
 }
