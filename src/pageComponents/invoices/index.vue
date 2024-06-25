@@ -2,12 +2,9 @@
     <v-row no-gutters>
         <v-col cols="8">
             <v-sheet class="pa-2 ma-2">
-                <v-data-table
-                    :headers="headers"
-                    :items="invoices"
-                    class="elevation-1">
+                <v-data-table :headers="headers" :items="invoices" class="elevation-1">
                     <template v-slot:[`item.editAction`]="{ item }">
-                        <v-btn icon @click="editItem(item)" color="blue">
+                        <v-btn icon @click="editInvoice(item)" color="blue">
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
                     </template>
@@ -17,8 +14,13 @@
                         </v-btn>
                     </template>
                     <template v-slot:[`item.sendAction`]="{ item }">
-                        <v-btn icon @click="sendEmail(item)" color="green">
-                            <v-icon>mdi-email</v-icon>
+                        <v-btn icon @click="sendWhatsAppMessage(item)" color="green">
+                            <v-icon>mdi-send</v-icon>
+                        </v-btn>
+                    </template>
+                    <template v-slot:[`item.open`]="{ item }">
+                        <v-btn icon @click="openInvoice(item)" color="green">
+                            <v-icon>mdi-share</v-icon>
                         </v-btn>
                     </template>
                 </v-data-table>
@@ -26,7 +28,10 @@
         </v-col>
         <v-col cols="4">
             <v-sheet class="pa-2 ma-2">
-                .v-col-auto
+                <div v-if="edit">
+                    <h1>edit Invoice</h1>
+                    {{ JSON.stringify(editData) }}
+                </div>
             </v-sheet>
         </v-col>
     </v-row>
@@ -37,6 +42,7 @@
 <script>
 import { ref, onBeforeMount, computed } from 'vue';
 import invoiceServiceOperations from '@/services/invoices.js';
+import notifyServiceOperarations from '@/services/notify.js'
 import { useStore } from 'vuex';
 
 export default {
@@ -44,8 +50,21 @@ export default {
     setup() {
         const store = useStore();
         const invoices = ref([]);
+        const edit = ref(false)
+        const editData = ref({})
+
+
         const token = computed(() => store.state.userData.token);
 
+
+
+        const editInvoice = (item) => {
+            edit.value = true
+            editData.value = item
+        }
+        const openInvoice = () => {
+
+        }
         const gstValueGenerate = (price) => {
             let basePrice = Math.floor(price * 0.8474594);
             let gst = Math.floor(basePrice * 0.18);
@@ -59,6 +78,7 @@ export default {
         onBeforeMount(async () => {
             const response = await invoiceServiceOperations.getAllInvoices(token.value);
             invoices.value = response.data.data.map(invoice => ({
+                id: invoice._id,
                 userName: invoice.customerDetails.name,
                 phone: invoice.customerDetails.phone,
                 address: invoice.customerDetails.address,
@@ -69,22 +89,40 @@ export default {
             }));
         });
 
+        const InvoiceMessageGenerate = (name, id) => {
+            const invoice = `https://aquakart.co.in/admin/crm/invoice/${id}`
+            const message = `Hello Dear ${name} we welcome you to Aquakart Family and here is youer live invoice link ${invoice} and we offer you more discounts at aquakart.co.in`
+            return message
+        }
+
+        const sendWhatsAppMessage = (item) => {
+            console.log(item.phone)
+            notifyServiceOperarations.sendWhatsAppMessage(token.value, item.phone, InvoiceMessageGenerate(item.userName, item.id))
+        }
         const headers = [
-    { title: 'Customer Name', value: 'userName' },
-    { title: 'Phone Number', value: 'phone' },
-    { title: 'Address', value: 'address' },
-    { title: 'Purchased Items', value: 'products' },
-    { title: 'GST', value: 'gst' },
-    { title: 'Total Price', value: 'total' },
-    { title: 'Edit', value: 'editAction', sortable: false },
-    { title: 'Delete', value: 'deleteAction', sortable: false },
-    { title: 'Send', value: 'sendAction', sortable: false }
-];
+            { title: 'Customer Name', value: 'userName' },
+            { title: 'Phone Number', value: 'phone' },
+            { title: 'Address', value: 'address' },
+            { title: 'Purchased Items', value: 'products' },
+            { title: 'GST', value: 'gst' },
+            { title: 'Total Price', value: 'total' },
+            { title: 'Edit', value: 'editAction', sortable: false },
+            { title: 'Delete', value: 'deleteAction', sortable: false },
+            { title: 'Send', value: 'sendAction', sortable: false },
+            { title: "Open-Invoice", value: "Open", sortable: false }
+        ];
 
 
         return {
+            edit,
+            editData,
             invoices,
-            headers
+            headers,
+            //functions
+            editInvoice,
+            openInvoice,
+            InvoiceMessageGenerate,
+            sendWhatsAppMessage
         };
     },
 }
