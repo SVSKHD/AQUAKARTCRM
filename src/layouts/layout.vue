@@ -1,44 +1,88 @@
 <template>
   <v-app>
-    <v-layout>
-      <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
-        <v-list v-if="loggedInUser">
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>{{ loggedInUser?.user?.email }}</v-list-item-title>
-              <v-list-item-subtitle>
-                {{ loggedInUser?.user?.role === 1 ? 'Admin' : 'Manager' }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-      <v-main>
-        <v-container>
-          <v-dialog v-model="dialog" max-width="400" persistent>
-            <v-card prepend-icon="mdi-account" text="Login to access the power of admin" title="Login">
-              <v-card-text>
-                <v-text-field label="Email" required v-model="userDataCreds.email" variant="outlined" density="compact"/>
-                <v-text-field label="Password" required v-model="userDataCreds.password" type="password" variant="outlined" density="compact"/>
-              </v-card-text>
-              <v-btn @click="handleSubmit">Login</v-btn>
-            </v-card>
-          </v-dialog>
-          <h1>{{ pageTitle }}</h1>
-          <hr />
-          <router-view />
-        </v-container>
-      </v-main>
-      <v-footer name="footer" app></v-footer>
-    </v-layout>
+    <!-- AppBar should be directly under v-app for better layout control -->
+    <v-app-bar
+      color="indigo-darken-4"
+      dark
+      app
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn  color="#FFEBEE" v-if="loggedInUser.user" icon @click="AquaLogout">
+        Logout
+      </v-btn>
+    </v-app-bar>
+
+    <!-- Navigation Drawer -->
+    <v-navigation-drawer v-model="drawer" :rail="rail" permanent app>
+      <v-list v-if="loggedInUser.user">
+        <v-list-item>
+          <v-list-item-avatar color="red">
+            <span class="text-h5">{{ loggedInUser?.user.initials || 'A' }}</span>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ loggedInUser?.user.email }}</v-list-item-title>
+            <v-list-item-subtitle>
+              {{ loggedInUser?.user.role === 1 ? 'Admin' : 'Manager' }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list dense nav>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home-city</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>My Account</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-account-group-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Users</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- Main Content Area -->
+    <v-main>
+      <v-container>
+        <v-dialog v-model="dialog" max-width="400" persistent>
+          <v-card>
+            <v-card-title>
+              <v-icon left>mdi-account</v-icon>
+              Login to access the power of admin
+            </v-card-title>
+            <v-card-text>
+              <v-text-field label="Email" required v-model="userDataCreds.email" outlined dense/>
+              <v-text-field label="Password" required v-model="userDataCreds.password" type="password" outlined dense/>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn @click="handleSubmit" color="primary">Login</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <router-view />
+      </v-container>
+    </v-main>
+
+    <!-- Footer -->
+    <v-footer name="footer" padless>
+      <v-col class="text-center" cols="12">
+        {{ new Date().getFullYear() }} — <strong>Aquakart</strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
+
 
 <script>
 import { ref, computed, onBeforeMount } from 'vue';
@@ -52,12 +96,16 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    const loggedInUser = computed(()=>store.state.userData)
+    // In your setup() function
+const loggedInUser = computed(() => {
+    // Make sure userData is an object before trying to access its properties
+    return store.state.userData || { user: {} };
+});
+
     
 
     const userDataCreds = ref({ email: "", password: "" });
     const handleSubmit = () => {
-      console.log("user", userDataCreds.value);
       userServiceOperations.UserLogin(userDataCreds.value).then((res) => {
         console.log("res", res.data);
         store.commit("setUserData", res.data);
@@ -66,6 +114,12 @@ export default {
         localStorage.setItem("user", JSON.stringify(res.data));
       });
     };
+    const AquaLogout = () =>{
+      localStorage.removeItem("user")
+      store.commit("setUserData", {});
+      store.commit("setUserStatus", false);
+      dialog.value = true
+    }
 
     const drawer = ref(true);
     const rail = ref(true);
@@ -100,7 +154,8 @@ export default {
       rail,
       pageTitle,
       userDataCreds,
-      handleSubmit
+      handleSubmit,
+      AquaLogout
     };
   }
 }

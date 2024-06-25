@@ -59,8 +59,10 @@ export default {
 
 
         const editInvoice = (item) => {
+            invoiceServiceOperations.getInvoice(token.value, item.id).then((res) => {
+                editData.value = res.data
+            })
             edit.value = true
-            editData.value = item
         }
         const openInvoice = () => {
 

@@ -11,7 +11,11 @@ const BASE = process.env.VUE_APP_API
     }
 });
 
-const getInvoice = (id) => axios.get(`${BASE}/invoice${id}`)
+const getInvoice = (token,id) => axios.get(`${BASE}/invoice/${id}`,{
+    headers:{
+         'Authorization': `Bearer ${token}`
+    }
+})
 
 
 
