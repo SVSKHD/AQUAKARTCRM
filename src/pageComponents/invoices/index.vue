@@ -31,6 +31,7 @@
                 <div v-if="edit">
                     <h1>edit Invoice</h1>
                     {{ JSON.stringify(editData) }}
+<invoice-form :initialData="editData.value" @submit="handleInvoiceEdit"/>
                 </div>
             </v-sheet>
         </v-col>
@@ -40,13 +41,15 @@
 
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed , watch} from 'vue';
 import invoiceServiceOperations from '@/services/invoices.js';
 import notifyServiceOperarations from '@/services/notify.js'
+import invoiceForm from "./invoiceForm.vue"
 import { useStore } from 'vuex';
 
 export default {
     name: "AquaInvoicesComponent",
+    components:{invoiceForm},
     setup() {
         const store = useStore();
         const invoices = ref([]);
@@ -58,12 +61,22 @@ export default {
 
 
 
-        const editInvoice = (item) => {
-            invoiceServiceOperations.getInvoice(token.value, item.id).then((res) => {
-                editData.value = res.data
-            })
-            edit.value = true
+watch(editData, (newValue) => {
+  console.log('Edit data changed', newValue);
+}, { deep: true });
+
+
+const editInvoice = (item) => {
+    invoiceServiceOperations.getInvoice(token.value, item.id).then((res) => {
+        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+            editData.value = res.data[0];  // Assign the first object of the array
+        } else {
+            console.error('No invoice data returned for ID:', item.id);
         }
+    });
+    edit.value = true;
+}
+
         const openInvoice = () => {
 
         }
@@ -76,6 +89,12 @@ export default {
         const formatCurrency = (value) => {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
         };
+
+        const handleInvoiceEdit = (data) => {
+  console.log('Received form data:', data);
+  // Process data or call API
+};
+
 
         onBeforeMount(async () => {
             const response = await invoiceServiceOperations.getAllInvoices(token.value);
@@ -124,7 +143,8 @@ export default {
             editInvoice,
             openInvoice,
             InvoiceMessageGenerate,
-            sendWhatsAppMessage
+            sendWhatsAppMessage,
+            handleInvoiceEdit
         };
     },
 }
