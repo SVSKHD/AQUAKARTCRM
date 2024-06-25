@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AquaLayout from "../layouts/layout.vue"
 import notAuthorized from '@/views/notAuthorized.vue'
+import invoices from "@/views/invoicesView.vue"
 
 
 const routes = [
@@ -27,6 +28,11 @@ const routes = [
       path:"/not-authorized",
       name:"not-authorized",
       component:notAuthorized
+    },
+    {
+      path:"/invoices",
+      name:"Invoices",
+      component:invoices
     }
    ]
   }
