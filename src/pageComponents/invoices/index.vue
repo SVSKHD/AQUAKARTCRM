@@ -30,28 +30,26 @@
             <v-sheet class="pa-2 ma-2">
                 <div v-if="edit">
                     <h1>edit Invoice</h1>
-                    {{ JSON.stringify(editData) }}
-                    <aqua-input value="" placeholder="enter value"/>
+    
+                    <invoice-form :initial-invoice="editData" @submit="handleEditData"/>
                 </div>
             </v-sheet>
         </v-col>
     </v-row>
 </template>
 
-
-
 <script>
 import { ref, onBeforeMount, computed , watch} from 'vue';
 import invoiceServiceOperations from '@/services/invoices.js';
 import notifyServiceOperarations from '@/services/notify.js'
-// import invoiceForm from "./invoiceForm.vue"
-import AquaInput from "../../components/resuable/AquaInput"
+import invoiceForm from "./invoiceForm.vue"
+
 import { useStore } from 'vuex';
 
 export default {
     name: "AquaInvoicesComponent",
     // components:{invoiceForm},
-    components:{AquaInput},
+    components:{invoiceForm},
     setup() {
         const store = useStore();
         const invoices = ref([]);
@@ -112,6 +110,10 @@ const editInvoice = (item) => {
             }));
         });
 
+        const handleEditData = (data) =>{
+           console.log("invoice" , data)
+        }
+
         const InvoiceMessageGenerate = (name, id) => {
             const invoice = `https://aquakart.co.in/admin/crm/invoice/${id}`
             const message = `Hello Dear ${name} we welcome you to Aquakart Family and here is youer live invoice link ${invoice} and we offer you more discounts at aquakart.co.in`
@@ -146,7 +148,8 @@ const editInvoice = (item) => {
             openInvoice,
             InvoiceMessageGenerate,
             sendWhatsAppMessage,
-            handleInvoiceEdit
+            handleInvoiceEdit,
+            handleEditData
         };
     },
 }
