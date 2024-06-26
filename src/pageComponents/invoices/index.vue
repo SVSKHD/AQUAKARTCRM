@@ -31,7 +31,7 @@
                 <div v-if="edit">
                     <h1>edit Invoice</h1>
                     {{ JSON.stringify(editData) }}
-<invoice-form :initialData="editData.value" @submit="handleInvoiceEdit"/>
+                    <aqua-input value="" placeholder="enter value"/>
                 </div>
             </v-sheet>
         </v-col>
@@ -44,12 +44,14 @@
 import { ref, onBeforeMount, computed , watch} from 'vue';
 import invoiceServiceOperations from '@/services/invoices.js';
 import notifyServiceOperarations from '@/services/notify.js'
-import invoiceForm from "./invoiceForm.vue"
+// import invoiceForm from "./invoiceForm.vue"
+import AquaInput from "../../components/resuable/AquaInput"
 import { useStore } from 'vuex';
 
 export default {
     name: "AquaInvoicesComponent",
-    components:{invoiceForm},
+    // components:{invoiceForm},
+    components:{AquaInput},
     setup() {
         const store = useStore();
         const invoices = ref([]);
