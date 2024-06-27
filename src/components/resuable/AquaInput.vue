@@ -14,30 +14,30 @@
 
 <script>
 export default {
-  name: 'AquaInput',
+  name: "AquaInput",
   props: {
     modelValue: {
       type: String,
-      default: ''
+      default: "",
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     label: {
       type: String,
-      default: ''
+      default: "",
     },
     icon: {
       type: String,
-      default: 'mdi-magnify'  // Can be set dynamically via props
-    }
+      default: "mdi-magnify", // Can be set dynamically via props
+    },
   },
-  emits: ['update:modelValue', 'click'],
+  emits: ["update:modelValue", "click"],
   methods: {
     handleClick() {
-      this.$emit('click');
-    }
-  }
-}
+      this.$emit("click");
+    },
+  },
+};
 </script>

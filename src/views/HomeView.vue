@@ -45,22 +45,39 @@
 <script>
 import { ref } from "vue";
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   setup() {
     const offlineMenu = ref([
-      { name: "Invoices", path: "/invoices", icon: "mdi-file-document-outline" },
+      {
+        name: "Invoices",
+        path: "/invoices",
+        icon: "mdi-file-document-outline",
+      },
       { name: "Send Message", path: "/send-message", icon: "mdi-send" },
-      {name:"Payment-Links" , path:"payment-link", icon:'f117'}
+      { name: "Payment-Links", path: "payment-link", icon: "f117" },
     ]);
     const onlineMenu = ref([
-      { name: "Categories", path: "/category", icon: "mdi-file-document-outline" },
-      { name: "Sub-Categories", path: "/sub-category", icon: "mdi-file-document-outline" },
-    ])
+      {
+        name: "Categories",
+        path: "/category",
+        icon: "mdi-file-document-outline",
+      },
+      {
+        name: "Sub-Categories",
+        path: "/sub-category",
+        icon: "mdi-file-document-outline",
+      },
+      {
+        name: "Products",
+        path: "/product",
+        icon: "mdi-file-document-outline",
+      },
+    ]);
     return {
       offlineMenu,
-      onlineMenu
+      onlineMenu,
     };
-  }
+  },
 };
 </script>
 

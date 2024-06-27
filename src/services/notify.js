@@ -1,22 +1,16 @@
-import axios from "axios"
+import axios from "axios";
 
+const BASE = process.env.VUE_APP_API_NOTIFY;
 
-
-
-const BASE = process.env.VUE_APP_API_NOTIFY
-
-  const sendWhatsAppMessage = async(token , no , message) => await axios.get(`${BASE}/send-whatsapp/${no}?message=${message}`, {
+const sendWhatsAppMessage = async (token, no, message) =>
+  await axios.get(`${BASE}/send-whatsapp/${no}?message=${message}`, {
     headers: {
-        'Authorization': `Bearer ${token}` // Set the authorization header
-    }
-});
-
-
+      Authorization: `Bearer ${token}`, // Set the authorization header
+    },
+  });
 
 const notifyServiceOperarations = {
-sendWhatsAppMessage
-}
+  sendWhatsAppMessage,
+};
 
-export default notifyServiceOperarations
-
-
+export default notifyServiceOperarations;

@@ -1,15 +1,11 @@
 <template>
   <v-app>
     <!-- AppBar should be directly under v-app for better layout control -->
-    <v-app-bar
-      color="indigo-darken-4"
-      dark
-      app
-    >
+    <v-app-bar color="indigo-darken-4" dark app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn  color="#FFEBEE" v-if="loggedInUser.user" icon @click="AquaLogout">
+      <v-btn color="#FFEBEE" v-if="loggedInUser.user" icon @click="AquaLogout">
         Logout
       </v-btn>
     </v-app-bar>
@@ -17,11 +13,13 @@
     <!-- Navigation Drawer -->
     <v-navigation-drawer v-model="drawer" permanent app>
       <v-list v-if="loggedInUser.user">
-        <v-list-item> 
+        <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>{{ loggedInUser?.user.email }}</v-list-item-title>
+            <v-list-item-title>{{
+              loggedInUser?.user.email
+            }}</v-list-item-title>
             <v-list-item-subtitle>
-              {{ loggedInUser?.user.role === 1 ? 'Admin' : 'Manager' }}
+              {{ loggedInUser?.user.role === 1 ? "Admin" : "Manager" }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -59,8 +57,21 @@
               Login to access the power of admin
             </v-card-title>
             <v-card-text>
-              <v-text-field label="Email" required v-model="userDataCreds.email" outlined dense/>
-              <v-text-field label="Password" required v-model="userDataCreds.password" type="password" outlined dense/>
+              <v-text-field
+                label="Email"
+                required
+                v-model="userDataCreds.email"
+                outlined
+                dense
+              />
+              <v-text-field
+                label="Password"
+                required
+                v-model="userDataCreds.password"
+                type="password"
+                outlined
+                dense
+              />
             </v-card-text>
             <v-card-actions>
               <v-btn @click="handleSubmit" color="primary">Login</v-btn>
@@ -80,12 +91,11 @@
   </v-app>
 </template>
 
-
 <script>
-import { ref, computed, onBeforeMount } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import userServiceOperations from '@/services/user';
+import { ref, computed, onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
+import userServiceOperations from "@/services/user";
 
 export default {
   setup() {
@@ -94,12 +104,10 @@ export default {
     const store = useStore();
 
     // In your setup() function
-const loggedInUser = computed(() => {
-    // Make sure userData is an object before trying to access its properties
-    return store.state.userData || { user: {} };
-});
-
-    
+    const loggedInUser = computed(() => {
+      // Make sure userData is an object before trying to access its properties
+      return store.state.userData || { user: {} };
+    });
 
     const userDataCreds = ref({ email: "", password: "" });
     const handleSubmit = () => {
@@ -111,12 +119,12 @@ const loggedInUser = computed(() => {
         localStorage.setItem("user", JSON.stringify(res.data));
       });
     };
-    const AquaLogout = () =>{
-      localStorage.removeItem("user")
+    const AquaLogout = () => {
+      localStorage.removeItem("user");
       store.commit("setUserData", {});
       store.commit("setUserStatus", false);
-      dialog.value = true
-    }
+      dialog.value = true;
+    };
 
     const drawer = ref(true);
     const rail = ref(true);
@@ -128,7 +136,7 @@ const loggedInUser = computed(() => {
     });
 
     onBeforeMount(() => {
-      const user = localStorage.getItem("user")
+      const user = localStorage.getItem("user");
       if (user) {
         const userData = JSON.parse(user);
         store.commit("setUserData", userData);
@@ -152,10 +160,10 @@ const loggedInUser = computed(() => {
       pageTitle,
       userDataCreds,
       handleSubmit,
-      AquaLogout
+      AquaLogout,
     };
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

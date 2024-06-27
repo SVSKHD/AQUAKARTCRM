@@ -1,7 +1,5 @@
 <template>
-<h1>Payment links</h1>
+  <h1>Payment links</h1>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
