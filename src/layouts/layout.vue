@@ -15,12 +15,9 @@
     </v-app-bar>
 
     <!-- Navigation Drawer -->
-    <v-navigation-drawer v-model="drawer" :rail="rail" permanent app>
+    <v-navigation-drawer v-model="drawer" permanent app>
       <v-list v-if="loggedInUser.user">
-        <v-list-item>
-          <v-list-item-avatar color="red">
-            <span class="text-h5">{{ loggedInUser?.user.initials || 'A' }}</span>
-          </v-list-item-avatar>
+        <v-list-item> 
           <v-list-item-content>
             <v-list-item-title>{{ loggedInUser?.user.email }}</v-list-item-title>
             <v-list-item-subtitle>
@@ -31,7 +28,7 @@
       </v-list>
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-icon>
             <v-icon>mdi-home-city</v-icon>
           </v-list-item-icon>

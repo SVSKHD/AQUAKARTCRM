@@ -4,6 +4,8 @@ import AquaLayout from "../layouts/layout.vue"
 import notAuthorized from '@/views/notAuthorized.vue'
 import invoices from "@/views/invoicesView.vue"
 import paymentslinks from '@/views/paymentslinks.vue'
+import CategoryView from '@/views/CategoriesView.vue'
+import SubCategoryView from '@/views/SubCategoryView.vue'
 
 const routes = [
   {
@@ -38,7 +40,17 @@ const routes = [
       path:"/payment-link",
       name:"payment-link",
       component:paymentslinks
-    }
+    }, 
+    {
+     path:"/category",
+     name:"category",
+     component:CategoryView
+    },
+    {
+      path:"/sub-category",
+      name:"sub-category",
+      component:SubCategoryView
+     },
    ]
   }
 ]

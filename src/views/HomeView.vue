@@ -3,6 +3,7 @@
     <v-row>
       <!-- Left Column -->
       <v-col cols="12" md="6">
+        <h2 class="text-center">Aquakart Offline Menu</h2>
         <v-row>
           <v-col cols="12" sm="6" v-for="item in offlineMenu" :key="item.name">
             <v-card
@@ -13,7 +14,6 @@
               :prepend-icon="item.icon"
               rel="noopener"
               subtitle="Check out the official repository"
-              target="_blank"
               :title="item.name"
             ></v-card>
           </v-col>
@@ -21,11 +21,22 @@
       </v-col>
       <!-- Right Column -->
       <v-col cols="12" md="6">
-        <!-- Other content for the right column -->
-        <div>
-          <h2>Right Column Content</h2>
-          <p>Add any other content you want here.</p>
-        </div>
+        <h2 class="text-center">Aquakart Online Menu</h2>
+
+        <v-row>
+          <v-col cols="12" sm="6" v-for="item in onlineMenu" :key="item.name">
+            <v-card
+              append-icon="mdi-open-in-new"
+              class="mx-auto my-3"
+              :href="item.path"
+              max-width="250"
+              :prepend-icon="item.icon"
+              rel="noopener"
+              subtitle="Check out the official repository"
+              :title="item.name"
+            ></v-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -41,8 +52,13 @@ export default {
       { name: "Send Message", path: "/send-message", icon: "mdi-send" },
       {name:"Payment-Links" , path:"payment-link", icon:'f117'}
     ]);
+    const onlineMenu = ref([
+      { name: "Categories", path: "/category", icon: "mdi-file-document-outline" },
+      { name: "Sub-Categories", path: "/sub-category", icon: "mdi-file-document-outline" },
+    ])
     return {
-      offlineMenu
+      offlineMenu,
+      onlineMenu
     };
   }
 };
