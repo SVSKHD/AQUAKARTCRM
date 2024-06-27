@@ -38,7 +38,8 @@ export default {
   setup() {
     const offlineMenu = ref([
       { name: "Invoices", path: "/invoices", icon: "mdi-file-document-outline" },
-      { name: "Send Message", path: "/send-message", icon: "mdi-send" }
+      { name: "Send Message", path: "/send-message", icon: "mdi-send" },
+      {name:"Payment-Links" , path:"payment-link", icon:'f117'}
     ]);
     return {
       offlineMenu

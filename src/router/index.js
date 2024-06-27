@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AquaLayout from "../layouts/layout.vue"
 import notAuthorized from '@/views/notAuthorized.vue'
 import invoices from "@/views/invoicesView.vue"
-
+import paymentslinks from '@/views/paymentslinks.vue'
 
 const routes = [
   {
@@ -33,6 +33,11 @@ const routes = [
       path:"/invoices",
       name:"Invoices",
       component:invoices
+    },
+    {
+      path:"/payment-link",
+      name:"payment-link",
+      component:paymentslinks
     }
    ]
   }
