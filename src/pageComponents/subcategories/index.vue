@@ -44,13 +44,15 @@
     <v-col lg="4" md="4" sm="12">
         <div v-if="create">
         <v-btn color="#673AB7" @click="create=false">
-            exit
+            clear create
         </v-btn>
+        <sub-category-form :item="createData"/>
         </div>
       <div v-if="edit">
-        <v-btn color="#673AB7" text="don't edit" @click="edit = false" />
+        <v-btn color="#673AB7" text="clear edit" @click="edit = false" />
+        <sub-category-form :item="editData"/>
       </div>
-      <h1>Subcategory Form</h1>
+    
     </v-col>
   </v-row>
 </template>
@@ -59,9 +61,12 @@
 <script setup>
 import {onBeforeMount , ref} from "vue"
 import SubCategoryServiceOperarations from "@/services/subCategories";
+import subCategoryForm from "./subCategoryForm"
 const subCategories = ref([])
 const edit = ref(false)
 const create=ref(false)
+const editData = ref({})
+const createData = ref({})
 
 
 onBeforeMount(()=>{
@@ -78,8 +83,13 @@ const loadSubCategories = () =>{
 
 const editItem = (item) =>{
     edit.value=true
+    editData.value = item
 console.log("edit", item)
 loadSubCategories()
+}
+
+const createItem = () =>{
+  create.value=true
 }
 const deleteItem = (item)=>{
 console.log("dele", item)

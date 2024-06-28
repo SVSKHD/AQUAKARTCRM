@@ -45,47 +45,62 @@
       </v-col>
       <v-col lg="4" md="4" sm="12">
           <div v-if="create">
-          <v-btn color="#673AB7" @click="create=false">
-              exit
-          </v-btn>
-          </div>
+          <v-btn color="#673AB7"@click="create=false" text="clear create"/>
+          <category-form :item="createData"/>
+        </div>
         <div v-if="edit">
-          <v-btn color="#673AB7" text="don't edit" @click="edit = false" />
+          <v-btn color="#673AB7" text="clear edit" @click="edit = false" />
+          <category-form :item="editData"/>
         </div>
       </v-col>
     </v-row>
   </template>
   
   <script setup>
-  import { onBeforeMount, ref } from "vue";
-  import CategoryServiceOperations from "../../services/categories.js"; // Corrected import
-  
+  import { onBeforeMount, ref, watch } from "vue";
+  import CategoryServiceOperations from "../../services/categories.js"; 
+  import categoryForm from "./categoryForm.vue";
   const categories = ref([]);
   const edit = ref(false);
   const create = ref(false)
-  
+  const editData = ref({})
+  const createData = ref({})
+ 
   onBeforeMount(() => {
+    loadCategories();
+  });
+  
+  const loadCategories = () => {
     CategoryServiceOperations.getAllcategories().then((res) => {
       categories.value = res.data.data;
     });
-  });
-  
-  const loadCategories = () =>{
-      CategoryServiceOperations.getAllcategories().then((res)=>{
-          categories.value=res.data.data
-      })
   }
+
   const createItem = () =>{
       create.value=true
+      createData.value={}
   }
   const editItem = (item) => {
     edit.value = true;
     console.log("edit", item);
-    loadCategories()
+    editData.value=item
+    // loadCategories()
   };
   const deleteItem = (item) => {
     console.log("delete", item);
     loadCategories()
   };
+  watch(create,()=>{
+    if(create.value===true){
+    edit.value=false
+    }
+})
+
+watch(edit,()=>{
+    if(edit.value===true){
+        create.value=false
+    }
+})
+
   </script>
   
