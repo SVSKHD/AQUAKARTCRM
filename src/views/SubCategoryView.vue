@@ -1,5 +1,5 @@
 <template>
-  <AquaSubCategories/>
+  <AquaSubCategories />
 </template>
 
 <script>

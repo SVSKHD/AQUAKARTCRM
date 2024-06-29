@@ -6,7 +6,7 @@ import invoices from "@/views/invoicesView.vue";
 import paymentslinks from "@/views/paymentslinks.vue";
 import CategoryView from "@/views/CategoriesView.vue";
 import SubCategoryView from "@/views/SubCategoryView.vue";
-import ProductView from "@/views/ProductView.vue"
+import ProductView from "@/views/ProductView.vue";
 
 const routes = [
   {
