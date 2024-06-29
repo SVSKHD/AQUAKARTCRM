@@ -87,7 +87,7 @@
       <!-- Transport Details -->
       <v-select
         v-model="invoice.transport.deliveredBy"
-        :items="['Ganesh', 'Rammohan Bheem', 'Achibabu']"
+        :items="['Ganesh', 'Ram-mohan', 'Bheem', 'Achibabu']"
         label="Delivered By"
         variant="outlined"
         density="compact"
@@ -194,7 +194,7 @@ const invoice = ref({
 const showGst = ref(false);
 
 // Sample product names for the autocomplete
-const productNames = ref(["Product 1", "Product 2", "Product 3"]);
+const productNames = ref(["Kent Bathroom Softener", "Kent AutoSoftener 25", "Kent AutoSoftener 40", "Kent Automatic 8L", "Kent Sandfilter", "Kent IronFilter", "Kent Washing Water Softener", "Kent Ro Purifier", "Kent Sterling", "Kent Execll+", "Grundfos pump 0.9hp", "Grundfos Scala"]);
 
 // Watch for changes in the prop and update the local ref accordingly
 watch(

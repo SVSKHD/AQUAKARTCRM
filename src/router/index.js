@@ -7,6 +7,7 @@ import paymentslinks from "@/views/paymentslinks.vue";
 import CategoryView from "@/views/CategoriesView.vue";
 import SubCategoryView from "@/views/SubCategoryView.vue";
 import ProductView from "@/views/ProductView.vue";
+import DynamicInvoiceView from "@/views/DynamicInvoiceView.vue";
 
 const routes = [
   {
@@ -20,45 +21,47 @@ const routes = [
         component: HomeView,
       },
       {
-        path: "/about",
+        path: "about",
         name: "about",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
       },
       {
-        path: "/not-authorized",
+        path: "not-authorized",
         name: "not-authorized",
         component: notAuthorized,
       },
       {
-        path: "/invoices",
-        name: "Invoices",
-        component: invoices,
-      },
-      {
-        path: "/payment-link",
+        path: "payment-link",
         name: "payment-link",
         component: paymentslinks,
       },
       {
-        path: "/category",
+        path: "category",
         name: "category",
         component: CategoryView,
       },
       {
-        path: "/sub-category",
+        path: "sub-category",
         name: "sub-category",
         component: SubCategoryView,
       },
       {
-        path: "/product",
+        path: "product",
         name: "product",
         component: ProductView,
       },
+      {
+        path: "/invoices",
+        name: "invoices",
+        component: invoices,
+      },
     ],
+  },
+  {
+    path: "/invoice/:id",
+    name: "dynamicInvoice",
+    component: DynamicInvoiceView,
   },
 ];
 
