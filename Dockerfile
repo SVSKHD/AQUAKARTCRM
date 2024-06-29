@@ -11,13 +11,13 @@ COPY package*.json ./
 RUN npm install -g pm2
 
 # Install dependencies
-RUN npm install --production
+RUN yarn install --production
 
 # Copy the rest of the application code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn run build
 
 # Expose the port the app runs on
 EXPOSE 4000
